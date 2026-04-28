@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 4: Virtual Laboratory Environment</title>
+    <style>
+        /* --- ACADEMIC DISGUISE STYLES --- */
+        body, html { 
+            margin: 0; padding: 0; height: 100%; width: 100%; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #f4f7f6; color: #333; overflow: hidden;
+        }
+        
+        #academic-mask {
+            display: flex; flex-direction: column; align-items: center; 
+            justify-content: center; height: 100vh; text-align: center;
+        }
+
+        .lab-card {
+            background: white; padding: 40px; border-radius: 12px;
+            border: 1px solid #d1d9d7; box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+            max-width: 500px;
+        }
+
+        .lab-icon { width: 60px; margin-bottom: 20px; opacity: 0.8; }
+
+        h1 { font-size: 24px; color: #2c3e50; margin-bottom: 10px; }
+        p { color: #666; margin-bottom: 30px; line-height: 1.6; }
+
+        .btn-launch {
+            background-color: #007bff; color: white; border: none;
+            padding: 12px 30px; border-radius: 6px; font-size: 16px;
+            font-weight: 600; cursor: pointer; transition: background 0.3s;
+        }
+
+        .btn-launch:hover { background-color: #0056b3; }
+
+        /* --- THE STEALTH ENGINE --- */
+        #proxy-container {
+            display: none; position: fixed; top: 0; left: 0; 
+            width: 100%; height: 100%; z-index: 9999; background: white;
+        }
+
+        iframe { width: 100%; height: 100%; border: none; }
+
+        /* --- THE PANIC OVERLAY --- */
+        #panic-screen {
+            display: none; position: fixed; top: 0; left: 0; 
+            width: 100%; height: 100%; z-index: 10000; background: white;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- DISGUISE LAYER: What teachers see -->
+    <div id="academic-mask">
+        <div class="lab-card">
+            <img src="https://gstatic.com" class="lab-icon" alt="Lab Icon">
+            <h1>Bio-Chemical Simulator</h1>
+            <p>Accessing the secure research portal for <b>turtleboyagain120</b>. Please ensure you are connected to the campus VPN for full telemetry data.</p>
+            <button class="btn-launch" onclick="launchLab()">Initialize Simulation</button>
+            <div style="margin-top: 30px; font-size: 11px; color: #bbb;">System Version: 10.4.2_LTS</div>
+        </div>
+    </div>
+
+    <!-- ENGINE LAYER: Where the unblocker lives -->
+    <div id="proxy-container">
+        <iframe id="engine-frame"></iframe>
+    </div>
+
+    <!-- PANIC LAYER: Redirects to a safe educational search -->
+    <iframe id="panic-screen" src="https://google.com"></iframe>
+
+    <script>
+        // REDUNDANCY LIST: Fixes the "IP Not Found" error
+        const mirrors = [
+            "https://artclass.site",                // Ultraviolet Mirror 1
+            "https://is-a-fullstack.dev", // Real working subdomain
+            "https://math-games.pro",               // Stealth Mirror
+            "https://v6p.co",                     // Optimized Shortlink
+            "https://vercel.app" // Vercel Cloud Mirror
+        ];
+
+        let currentMirror = 0;
+
+        function launchLab() {
+            // Hide mask, show proxy
+            document.getElementById('academic-mask').style.display = 'none';
+            document.getElementById('proxy-container').style.display = 'block';
+            loadMirror();
+        }
+
+        function loadMirror() {
+            const frame = document.getElementById('engine-frame');
+            const target = mirrors[currentMirror];
+            
+            console.log("[LAB-SYSTEM] Loading Node: " + target);
+            frame.src = target;
+            
+            // Increment index so the next 'R' tap loads a different site
+            currentMirror = (currentMirror + 1) % mirrors.length;
+        }
+
+        // --- CONTROLS ---
+        window.addEventListener('keydown', (e) => {
+            // 1. PANIC SWITCH (ESC)
+            if (e.key === 'Escape') {
+                const frame = document.getElementById('engine-frame');
+                frame.src = "about:blank"; // Instantly kill sound/video
+                
+                document.getElementById('proxy-container').style.display = 'none';
+                document.getElementById('panic-screen').style.display = 'block';
+                document.title = "Math Help - Google Search";
+            }
+
+            // 2. RELOAD/ROTATE (R Key)
+            // If the screen stays white or says "IP Not Found", tap 'R'
+            if (e.key === 'r' || e.key === 'R') {
+                if(document.getElementById('proxy-container').style.display === 'block') {
+                    loadMirror();
+                }
+            }
+        });
+
+        // Decoy title for the browser tab
+        document.title = "Virtual Lab - turtleboyagain120";
+    </script>
+</body>
+</html>
