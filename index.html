@@ -3,495 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>turtleboyagain120 - Stealth Dev God | Hire the Solo Empire Builder</title>
+    <title>TURTLEBOYAGAIN120 // ARCHITECT OF THE SOLO EMPIRE</title>
     <style>
-        /* Reset & Base */
+        :root { --neon: #00ff88; --dark: #050505; --cyan: #00ffff; --magenta: #ff00ff; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Courier New', monospace; overflow-x: hidden; background: #000; color: #00ff88; cursor: none; }
-        canvas { display: block; position: fixed; top: 0; left: 0; z-index: 1; }
-    #content { position: relative; z-index: 10; padding: 20px; max-width: 1400px; margin: 0 auto; backdrop-filter: blur(10px); background: rgba(0,0,0,0.4); }
+        body { background: var(--dark); color: var(--neon); font-family: 'Courier New', monospace; overflow-x: hidden; cursor: none; }
 
-        /* Neon Cyberpunk Theme */
-        :root { --neon-green: #00ff88; --neon-magenta: #ff00ff; --neon-cyan: #00ffff; --blur: blur(20px); }
-        .neon-glow { text-shadow: 0 0 5px var(--neon-green), 0 0 10px var(--neon-green), 0 0 20px var(--neon-cyan); }
-        .gradient-bg { background: linear-gradient(45deg, #000, #001122, #000); }
-        /* Static Glassy Backgrounds */
-        .glass-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;
-            pointer-events: none;
-        }
-        .glass-layer-1 { background: rgba(255,255,255,0.03); backdrop-filter: blur(30px); animation: glass-breathe 8s ease-in-out infinite; }
-        .glass-layer-2 { background: radial-gradient(circle at 20% 80%, rgba(0,255,136,0.05) 0%, transparent 50%), rgba(255,255,255,0.02); backdrop-filter: blur(20px); opacity: 0.8; }
-        .glass-layer-3 { background: conic-gradient(from 0deg at 50% 20%, rgba(255,0,255,0.04), rgba(0,255,255,0.04), transparent 50%); backdrop-filter: blur(40px); mix-blend-mode: soft-light; animation: glass-shimmer 12s linear infinite; }
+        /* THE MATRIX BACKGROUND */
+        canvas#matrix { position: fixed; top: 0; left: 0; z-index: 1; opacity: 0.15; pointer-events: none; }
 
-        /* Hero Section */
+        /* THE CONTENT LAYER */
+        #content { position: relative; z-index: 10; padding: 0 5%; max-width: 1600px; margin: 0 auto; background: rgba(0,0,0,0.6); }
+
+        /* HERO SECTION */
         #hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        #hero h1 { font-size: clamp(3rem, 8vw, 10rem); font-weight: bold; margin-bottom: 20px; animation: glitch 2s infinite; }
-        #hero p { font-size: clamp(1.2rem, 3vw, 2rem); opacity: 0.9; animation: pulse 3s infinite; }
-        @keyframes glitch { 0%, 90% { transform: translate(0); } 10%, 20% { transform: translate(-2px, 2px); } 15%, 25% { transform: translate(2px, -2px); } }
-        @keyframes pulse { 0%, 100% { opacity: 0.9; } 50% { opacity: 1; text-shadow: 0 0 30px var(--neon-magenta); } }
+        .glitch-title { font-size: clamp(3rem, 10vw, 12rem); font-weight: 900; letter-spacing: -5px; position: relative; animation: glitch 1s infinite alternate; }
+        .hero-tag { font-size: 1.2rem; color: var(--cyan); letter-spacing: 5px; text-transform: uppercase; margin-top: 20px; }
 
-        /* Particles & Blur Trails */
-        .particle-trail { filter: var(--blur); position: absolute; pointer-events: none; z-index: 2; mix-blend-mode: screen; }
-        #cursor { position: fixed; width: 20px; height: 20px; border: 2px solid var(--neon-cyan); border-radius: 50%; z-index: 20; transition: transform 0.1s ease; pointer-events: none; box-shadow: 0 0 20px var(--neon-cyan); }
+        /* TIMELINE SECTION (The Resume Shield) */
+        #bio { padding: 100px 0; border-top: 1px solid rgba(0,255,136,0.1); }
+        .timeline { position: relative; max-width: 1000px; margin: 0 auto; }
+        .timeline::after { content: ''; position: absolute; width: 2px; background: var(--neon); top: 0; bottom: 0; left: 50%; margin-left: -1px; }
+        .container { padding: 10px 40px; position: relative; width: 50%; opacity: 0; transform: translateY(50px); transition: 1s ease; }
+        .container.visible { opacity: 1; transform: translateY(0); }
+        .left { left: 0; } .right { left: 50%; }
+        .content-box { padding: 20px; background: rgba(0,255,136,0.05); border: 1px solid var(--neon); border-radius: 6px; position: relative; }
+        .content-box h2 { font-size: 1.1rem; color: var(--magenta); margin-bottom: 5px; }
 
-        /* Projects Grid */
-        #projects { padding: 100px 20px; }
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
-        .project-card { background: rgba(0,20,0,0.5); backdrop-filter: blur(10px); border: 1px solid var(--neon-green); padding: 30px; border-radius: 15px; transition: all 0.3s ease; position: relative; overflow: hidden; }
-        .project-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transition: 0.5s; }
-        .project-card:hover::before { left: 100%; }
-.project-card:hover, .project-card:focus-within { transform: translateY(-10px) scale(1.05); box-shadow: 0 20px 40px rgba(0,255,136,0.3); }
-        .project-name { font-size: 1.8rem; color: var(--neon-cyan); margin-bottom: 10px; }
-        .project-tech { color: var(--neon-magenta); font-size: 0.9rem; margin-bottom: 15px; }
+        /* PROJECT NODES */
+        #nodes { padding: 100px 0; }
+        .node-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+        .node-card { border: 1px solid var(--neon); padding: 30px; position: relative; transition: 0.4s; overflow: hidden; background: rgba(0,0,0,0.8); }
+        .node-card:hover { transform: scale(1.02); box-shadow: 0 0 40px rgba(0,255,136,0.2); }
+        .node-card::before { content: "SYS_ACTIVE"; position: absolute; top: 5px; right: 5px; font-size: 8px; color: var(--cyan); }
 
-        /* Badges Carousel -->
-        #badges { padding: 100px 20px; background: rgba(0,0,0,0.8); }
-        .badges-container { overflow: hidden; white-space: nowrap; }
-        .badges-scroll { display: inline-flex; animation: scroll-badges 120s linear infinite paused; gap: 10px; } /* Slower, pause on hover */
-        .badges-container:hover .badges-scroll { animation-play-state: paused; }
-        .badge { height: 40px; vertical-align: middle; animation: badge-float 3s ease-in-out infinite alternate; }
-@keyframes scroll-badges { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } } /* Optimized: slower infinite marquee, hover pause */
-        @keyframes badge-float { 0% { transform: translateY(0px); } 100% { transform: translateY(-5px); } }
+        /* THE SECRET DOOR */
+        #secret-access { position: absolute; bottom: 5px; right: 5px; font-size: 8px; opacity: 0.03; text-decoration: none; color: white; transition: 0.2s; }
+        #secret-access:hover { opacity: 0.5; }
 
-        /* Bio Timeline */
-        #bio { padding: 100px 20px; }
-        .timeline { position: relative; max-width: 800px; margin: 0 auto; }
-        .timeline::before { content: ''; position: absolute; left: 50%; width: 4px; height: 100%; background: linear-gradient(var(--neon-green), var(--neon-cyan)); transform: translateX(-50%); }
-        .timeline-item { margin: 50px 0; position: relative; }
-        .timeline-content { background: rgba(0,20,0,0.7); padding: 20px; border-radius: 10px; border-left: 4px solid var(--neon-magenta); margin-left: 60%; width: 35%; box-shadow: 0 10px 20px rgba(0,0,0,0.5); animation: fade-in 1s ease; }
-        .timeline-content.left { margin-left: 0; margin-right: 60%; border-left: none; border-right: 4px solid var(--neon-magenta); }
+        /* CURSOR */
+        #cursor { position: fixed; width: 15px; height: 15px; border: 1px solid var(--cyan); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); box-shadow: 0 0 15px var(--cyan); }
 
-        /* Responsive */
-@media (max-width: 768px) { .timeline::before { left: 20px; } .timeline-content { margin-left: 60px !important; width: calc(100% - 80px); border-right: none; } .timeline-content.left { margin-left: 60px !important; } #cursor { display: none; } }
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-  .section { opacity: 1; transform: none; }
-  .badges-scroll { animation: none; }
-}
-
-        /* Animations */
-        @keyframes fade-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .float { animation: float 6s ease-in-out infinite paused; } /* Pause infinite float, enable on hover */
-        .project-card:hover .float { animation-play-state: running; }
-        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
-
-
-        /* Contact */
-        #contact { padding: 100px 20px; text-align: center; }
-        .contact-btn { display: inline-block; padding: 15px 40px; background: transparent; border: 2px solid var(--neon-green); color: var(--neon-green); text-decoration: none; border-radius: 50px; font-size: 1.2rem; transition: all 0.3s; animation: pulse 2s infinite; }
-.contact-btn:hover, .contact-btn:focus { background: var(--neon-green); color: #000; box-shadow: 0 0 30px var(--neon-green); transform: scale(1.1); }
-
-        /* Glass Animations (subtle, low-perf) */
-        @keyframes glass-breathe { 0%, 100% { opacity: 0.9; } 50% { opacity: 1; } }
-        @keyframes glass-shimmer { 0% { filter: hue-rotate(0deg); } 100% { filter: hue-rotate(360deg); } }
-
-        /* Scroll Triggers */
-        .section { opacity: 0; transform: translateY(50px); transition: all 1s ease; }
-        .section.visible { opacity: 1; transform: translateY(0); }
+        /* ANIMATIONS */
+        @keyframes glitch { 
+            0% { text-shadow: 2px 2px var(--magenta); }
+            100% { text-shadow: -2px -2px var(--cyan); }
+        }
     </style>
 </head>
-<body class="gradient-bg">
-    <!-- Background Canvas for Particles & Blur -->
-<!-- Static Glassy Background Layers -->
-<div class="glass-bg glass-layer-1"></div>
-<div class="glass-bg glass-layer-2"></div>
-<div class="glass-bg glass-layer-3"></div>
-    
-    <!-- Custom Cursor -->
+<body>
+
+    <canvas id="matrix"></canvas>
     <div id="cursor"></div>
 
-    <div id="content" role="main" aria-label="Main portfolio content">
-        <!-- Hero -->
-        <section id="hero" class="section">
-<h1 id="hero-title" class="neon-glow typewriter">t<span class="type-char"></span>u<span class="type-char"></span>r<span class="type-char"></span>t<span class="type-char"></span>l<span class="type-char"></span>e<span class="type-char"></span>b<span class="type-char"></span>o<span class="type-char"></span>y<span class="type-char"></span>a<span class="type-char"></span>g<span class="type-char"></span>a<span class="type-char"></span>i<span class="type-char"></span>n<span class="type-char"></span>1<span class="type-char"></span>2<span class="type-char"></span>0</h1>
-            <p>Stealth Dev God | Solo Empire Builder | Proxy/VM/AI Master | Hire Me or Comment Paradox</p>
+    <div id="content">
+        <section id="hero">
+            <h1 class="glitch-title">TURTLEBOY</h1>
+            <p class="hero-tag">Empire Strategist // Full-Stack Specter</p>
+            <div style="margin-top: 50px; font-size: 0.8rem; color: #444;">[ CONNECTION ESTABLISHED VIA IS-A-FULLSTACK.DEV ]</div>
         </section>
 
-        <!-- Projects -->
-        <section id="projects" class="section">
-            <h2 class="neon-glow" style="text-align: center; margin-bottom: 50px; font-size: 3rem;">🔥 TOP 5 FIRE PROJECTS</h2>
-            <div class="projects-grid">
-                <div class="project-card float" onmouseenter="playHoverSound()">
-                    <div class="project-name">#1 AdvancedVM - Holo OS God</div>
-                    <div class="project-tech">Rust VM + React Desktop + Docker + 9 Langs</div>
-                    <p>Cross-language execution beast. Desktop/shell emulation. Beats Linux teams solo.</p>
-                </div>
-        <div class="project-card float" onmouseenter="playHoverSound()">
-                    <div class="project-name">#2 boring-proxy - Tunnel King</div>
-                    <div class="project-tech">Nginx + Squid + OpenVPN + Docker</div>
-                    <p>Undetectable stealth proxy. 5s deploy. Freedom warrior.</p>
-                </div>
-
-        <div class="project-card float" onmouseenter="playHoverSound()">
-                    <div class="project-name">#3 fortnite-endgame - AI Boss</div>
-                    <div class="project-tech">Three.js 3D + Python AI Behaviors</div>
-                    <p>Autonomous bots: build/peek/zone. Beats Epic solo.</p>
-                </div>
-
-        <div class="project-card float" onmouseenter="playHoverSound()">
-                    <div class="project-name">#4 Learn-proxys</div>
-                    <div class="project-tech">JS 55k lines + Nginx ELI5</div>
-                    <p>Multi-proxy arsenal + stealth education.</p>
-                </div>
-
-        <div class="project-card float" onmouseenter="playHoverSound()">
-                    <div class="project-name">#5 Parental Nuclear Suite</div>
-                    <div class="project-tech">Batch/PS1 + 120+ Registry Nukes</div>
-                    <p>Kid-proof fortress. White-hat freedom tools.</p>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Badges -->
-        <section id="badges" class="section">
-            <h2 class="neon-glow" style="text-align: center; margin-bottom: 50px;">🛡️ 100+ GOD MODE BADGES</h2>
-            <div class="badges-container">
-                <div class="badges-scroll" id="badges-scroll" aria-label="Scrolling badges carousel" role="marquee">
-                </div>
-            </div>
-        </section>
-
-        <!-- Bio -->
-        <section id="bio" class="section">
-            <h2 class="neon-glow" style="text-align: center; margin-bottom: 50px;">🧠 MINDSET BLUEPRINT</h2>
+        <section id="bio">
             <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-content left">
-                        <h3>Monorepo Empire</h3>
-                        <p>Thinks in systems: 210 files, 18 langs, no fragmentation.</p>
+                <div class="container left">
+                    <div class="content-box" onmouseenter="playSound(200)">
+                        <h2>2023 // INITIALIZATION</h2>
+                        <p>First logic gates established. Deployment of autonomous empire architecture begins.</p>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>Stealth Obsession</h3>
-                        <p>Proxies + nukes + history wipes = Paranoid genius.</p>
+                <div class="container right">
+                    <div class="content-box" onmouseenter="playSound(300)">
+                        <h2>2024 // NEURAL EXPANSION</h2>
+                        <p>Migration to distributed node systems. Advanced UI/UX camouflage protocols perfected.</p>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-content left">
-                        <h3>Duality Master</h3>
-                        <p>White-hat ELI5 + black-hat bypass = Know both sides.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>Business Vision</h3>
-                        <p>cocrea.world empire: Viral tools → Premium services.</p>
+                <div class="container left">
+                    <div class="content-box" onmouseenter="playSound(400)">
+                        <h2>2025 // PROTOCOL ZERO</h2>
+                        <p>Solo empire status achieved. Total network independence and stealth hosting operational.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Contact -->
-        <section id="contact" class="section">
-            <h2 class="neon-glow">🚀 Join the Empire</h2>
-            <p style="margin: 20px 0; font-size: 1.2rem;">GitHub: <a href="https://github.com/turtleboyagain120" style="color: var(--neon-cyan);">turtleboyagain120</a> | cocrea.world coming</p>
-            <a href="https://github.com/turtleboyagain120" class="contact-btn">Hire/Collab/Star</a>
+        <section id="nodes">
+            <div class="node-grid">
+                <div class="node-card" onmouseenter="playSound(600)">
+                    <h3>GRID_SYSTEM_V4</h3>
+                    <p>High-performance rendering engine for complex visual telemetry.</p>
+                </div>
+                <div class="node-card" onmouseenter="playSound(800)">
+                    <h3>SECURE_LAB_HUB</h3>
+                    <p>Internal academic research node for virtual laboratory simulations.</p>
+                    <!-- THE SECRET ACCESS: Links to lab.html -->
+                    <a href="lab.html" id="secret-access">AUTH_REQUIRED_ADMIN</a>
+                </div>
+                <div class="node-card" onmouseenter="playSound(1000)">
+                    <h3>VOID_PROTOCOL</h3>
+                    <p>End-to-end encrypted management portal for independent assets.</p>
+                </div>
+            </div>
         </section>
+
+        <footer style="text-align:center; padding: 100px 0; opacity: 0.3; font-size: 10px;">
+            TERMINAL_USER: turtleboyagain120 // STATUS: GHOST_MODE
+        </footer>
     </div>
 
-
-
     <script>
-        // Config (simplified - no particles)
-        const config = {
-            themeColors: ['#00ff88', '#ff00ff', '#00ffff'],
-            audio: {
-                bgVolume: 0.15,
-                hoverFreq: 600,
-                hoverDuration: 0.08,
-                typeFreq: 1200,
-                typeDuration: 0.05,
-                bassFreq: 55,
-                padFreq: 220,
-                subBassFreq: 27,
-                lfoFreq: 0.2
-            },
-            typewriterSpeed: 150,
-            scrollThrottle: 16 // ~60fps
-        };
-        let mouse = { x: 0, y: 0 };
-let time = 0;
-let bgAudioContext = null;
-let bgGainNode = null;
-let isBgPlaying = false;
+        // MATRIX EFFECT
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
 
-// Background cyberpunk ambient sound (bass drone)
-function initBackgroundSound() {
-    if (bgAudioContext) return;
-    bgAudioContext = new (window.AudioContext || window.webkitAudioContext)();
-    bgGainNode = bgAudioContext.createGain();
-    bgGainNode.connect(bgAudioContext.destination);
-bgGainNode.gain.value = config.audio.bgVolume; // Configurable volume
-
-    // Bass drone (55Hz sine) + pad (220Hz sawtooth subtle)
-    const bassOsc = bgAudioContext.createOscillator();
-    const padOsc = bgAudioContext.createOscillator();
-    bassOsc.frequency.value = config.audio.bassFreq;
-    padOsc.frequency.value = config.audio.padFreq;
-    bassOsc.type = 'sine';
-    padOsc.type = 'sawtooth';
-    padOsc.connect(bgGainNode);
-    bassOsc.connect(bgGainNode);
-    bassOsc.start();
-    padOsc.start();
-
-    // LFO for subtle modulation
-    // Sub-bass layer
-    const subBassOsc = bgAudioContext.createOscillator();
-    subBassOsc.frequency.value = config.audio.subBassFreq;
-    subBassOsc.type = 'sine';
-    const subGain = bgAudioContext.createGain();
-    subGain.gain.value = 0.08;
-    subBassOsc.connect(subGain);
-    subGain.connect(bgGainNode);
-    subBassOsc.start();
-
-    // Atmospheric noise (white noise filtered)
-    const noiseBufferSize = bgAudioContext.sampleRate * 0.1;
-    const noiseBuffer = bgAudioContext.createBuffer(1, noiseBufferSize, bgAudioContext.sampleRate);
-    const noiseData = noiseBuffer.getChannelData(0);
-    for (let i = 0; i < noiseBufferSize; i++) {
-        noiseData[i] = Math.random() * 2 - 1;
-    }
-    const noiseSource = bgAudioContext.createBufferSource();
-    noiseSource.buffer = noiseBuffer;
-    noiseSource.loop = true;
-    const noiseFilter = bgAudioContext.createBiquadFilter();
-    noiseFilter.type = 'lowpass';
-    noiseFilter.frequency.value = 800;
-    const noiseGain = bgAudioContext.createGain();
-    noiseGain.gain.value = 0.03;
-    noiseSource.connect(noiseFilter);
-    noiseFilter.connect(noiseGain);
-    noiseGain.connect(bgGainNode);
-    noiseSource.start();
-
-    // Simple reverb sim (delay feedback)
-    const delay = bgAudioContext.createDelay(0.5);
-    delay.delayTime.value = 0.1;
-    const feedbackGain = bgAudioContext.createGain();
-    feedbackGain.gain.value = 0.4;
-    bgGainNode.connect(delay);
-    delay.connect(feedbackGain);
-    feedbackGain.connect(bgGainNode);
-    feedbackGain.connect(delay); // Feedback loop
-
-    const lfo = bgAudioContext.createOscillator();
-    const lfoGain = bgAudioContext.createGain();
-    lfo.frequency.value = config.audio.lfoFreq; // Configurable LFO
-    lfoGain.gain.value = 10; // Mod depth
-    lfo.connect(lfoGain);
-    lfoGain.connect(padOsc.frequency);
-    lfo.type = 'sine';
-    lfo.start();
-
-    isBgPlaying = true;
-}
-
-// Audio controls with localStorage pref
-        const audioPrefKey = 'bgSoundEnabled';
-        const savedEnabled = localStorage.getItem(audioPrefKey) !== 'false';
-        isBgPlaying = savedEnabled;
-
-        // Mute toggle 'm' key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'm') {
-                if (isBgPlaying) {
-                    bgGainNode.gain.linearRampToValueAtTime(0, bgAudioContext.currentTime + 0.5);
-                    isBgPlaying = false;
-                } else if (bgAudioContext) {
-                    bgGainNode.gain.linearRampToValueAtTime(config.audio.bgVolume, bgAudioContext.currentTime + 0.5);
-                    isBgPlaying = true;
-                }
-                localStorage.setItem(audioPrefKey, isBgPlaying.toString());
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#0f8";
+            ctx.font = fontSize + "px monospace";
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
             }
-        });
+        }
+        setInterval(drawMatrix, 33);
 
-        // Mute button in contact
-        const contactSection = document.getElementById('contact');
-        const muteBtn = document.createElement('button');
-        muteBtn.textContent = '🔊 BG Sound';
-        muteBtn.className = 'contact-btn';
-        muteBtn.style.marginLeft = '10px';
-        muteBtn.onclick = () => {
-            if (isBgPlaying) {
-                bgGainNode.gain.linearRampToValueAtTime(0, bgAudioContext.currentTime + 0.5);
-                isBgPlaying = false;
-                muteBtn.textContent = '🔇 Muted';
-            } else if (bgAudioContext) {
-                bgGainNode.gain.linearRampToValueAtTime(config.audio.bgVolume, bgAudioContext.currentTime + 0.5);
-                isBgPlaying = true;
-                muteBtn.textContent = '🔊 BG Sound';
-            }
-            localStorage.setItem(audioPrefKey, isBgPlaying.toString());
-        };
-        contactSection.appendChild(muteBtn);
+        // SYTHESIZED SOUND (No files needed)
+        function playSound(freq) {
+            const context = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = context.createOscillator();
+            const gain = context.createGain();
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(freq, context.currentTime);
+            gain.gain.setValueAtTime(0.02, context.currentTime); // Quiet but cool
+            gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 0.1);
+            osc.connect(gain);
+            gain.connect(context.destination);
+            osc.start();
+            osc.stop(context.currentTime + 0.1);
+        }
 
-        // Auto-start if preferred
-        document.body.addEventListener('click', () => {
-            if (savedEnabled && !bgAudioContext) {
-                initBackgroundSound();
-            }
-        }, {once: true});
-
-
-/* Typewriter */
-
-
-
-
-        // Mouse/Touch Events
+        // CURSOR & SCROLL
+        const cursor = document.getElementById('cursor');
         document.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-            const cursor = document.getElementById('cursor');
-            cursor.style.left = (mouse.x - 10) + 'px';
-            cursor.style.top = (mouse.y - 10) + 'px';
-            cursor.style.transform = `scale(${1 + Math.sin(time * 0.2) * 0.3})`;
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
         });
 
-        document.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-            const touch = e.touches[0];
-            mouse.x = touch.clientX;
-            mouse.y = touch.clientY;
-        }, { passive: false });
-
-        // Scroll Reveals
-        const sections = document.querySelectorAll('.section');
-        function handleScroll() {
-            sections.forEach(section => {
-                const rect = section.getBoundingClientRect();
-                if (rect.top < window.innerHeight && rect.bottom > 0) {
-                    section.classList.add('visible');
-                }
-            });
-        }
-        let scrollRaf = null;
-        window.addEventListener('scroll', () => {
-            if (scrollRaf) cancelAnimationFrame(scrollRaf);
-            scrollRaf = requestAnimationFrame(handleScroll);
-        });
-        handleScroll();
-
-// Sawtooth SFX base - hover/type use this
-let sfxContext = null;
-function getSfxContext() {
-    if (!sfxContext || sfxContext.state === 'closed') {
-        sfxContext = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    return sfxContext;
-}
-function playSound(freq = 800, duration = 0.1, type = 'sawtooth') {
-    const audioContext = getSfxContext();
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    oscillator.frequency.setValueAtTime(freq, audioContext.currentTime);
-    oscillator.type = type;
-    
-    gainNode.gain.setValueAtTime(0.25, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
-    
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + duration);
-}
-
-function playHoverSound() {
-    playSound(config.audio.hoverFreq + Math.random() * 400, config.audio.hoverDuration, 'sawtooth'); // Random pitch variation
-}
-
-function playTypeSound() {
-    playSound(config.audio.typeFreq + Math.random() * 200, config.audio.typeDuration, 'sawtooth'); // Higher/shorter for type
-}
-
-
-// Typewriter effect with type sound
-let typeIndex = 0;
-function typewriter() {
-    const title = document.getElementById('hero-title');
-    const chars = title.querySelectorAll('.type-char');
-    if (typeIndex < chars.length) {
-        chars[typeIndex].classList.add('typed');
-        // Type sound: short sawtooth keypress
-        playTypeSound();
-        typeIndex++;
-        setTimeout(typewriter, config.typewriterSpeed); // Speed
-    } else {
-        // Glitch on complete
-        title.addEventListener('mouseenter', () => glitchText(title));
-    }
-}
-function glitchText(el) {
-    el.style.transform = `translate(${(Math.random()-0.5)*10}px, ${(Math.random()-0.5)*10}px) skew(${(Math.random()-0.5)*5}deg)`;
-    setTimeout(() => el.style.transform = '', 100);
-}
-
-// Generate badges dynamically from array for maintainability
-        const badgesData = [
-            {src: 'https://img.shields.io/badge/GitHub-turtleboyagain120-181717?style=for-the-badge&logo=github', alt: 'GitHub'},
-            {src: 'https://img.shields.io/badge/Views-3%2B→GOD-ef4444?style=for-the-badge&logo=crown', alt: 'Views God'},
-            {src: 'https://img.shields.io/badge/Proxy-Guard%20MAX-10b981?style=for-the-badge&logo=shield', alt: 'Proxy Guard'},
-            {src: 'https://img.shields.io/badge/VM-Shield%20100-green?style=for-the-badge&logo=lock', alt: 'VM Shield'},
-            {src: 'https://img.shields.io/badge/Docker-Pulls-blue?style=for-the-badge&logo=docker', alt: 'Docker'},
-            {src: 'https://img.shields.io/badge/Privacy-SHIELD-ED4C67?style=for-the-badge&logo=shield-alt', alt: 'Privacy'},
-            {src: 'https://img.shields.io/badge/Logs-ZERO-black?style=for-the-badge&logo=forbidden', alt: 'Zero Logs'},
-            {src: 'https://img.shields.io/badge/Coverage-100%25-God-ef4444?style=for-the-badge&logo=shield', alt: 'Coverage'},
-            {src: 'https://img.shields.io/badge/JS-55k%20lines-ff69b4?style=for-the-badge&logo=javascript', alt: 'JS Master'},
-            {src: 'https://img.shields.io/badge/Rust-VM%20Core-orange?style=for-the-badge&logo=rust', alt: 'Rust'},
-            {src: 'https://img.shields.io/badge/AI-Bot%20Boss-yellow?style=for-the-badge&logo=robot', alt: 'AI Boss'},
-            {src: 'https://img.shields.io/badge/Stealth-MAX-purple?style=for-the-badge&logo=ghost', alt: 'Stealth'},
-            {src: 'https://img.shields.io/badge/ELI5-Docs-blueviolet?style=for-the-badge&logo=book', alt: 'Docs'},
-            {src: 'https://img.shields.io/badge/Solo-God-red?style=for-the-badge&logo=crown', alt: 'Solo God'},
-            {src: 'https://img.shields.io/badge/Nginx-King-green?style=for-the-badge&logo=nginx', alt: 'Nginx'},
-            {src: 'https://img.shields.io/badge/Docker-Compose-blue?style=for-the-badge&logo=docker', alt: 'Docker Compose'},
-            {src: 'https://img.shields.io/badge/Python-AI-orange?style=for-the-badge&logo=python', alt: 'Python AI'},
-            {src: 'https://img.shields.io/badge/JS-Perf-Max-yellow?style=for-the-badge&logo=javascript', alt: 'JS Perf'},
-            {src: 'https://img.shields.io/badge/60FPS-Smooth-green?style=for-the-badge&logo=chart-line', alt: '60FPS'},
-            {src: 'https://img.shields.io/badge/Mobile-First-blue?style=for-the-badge&logo=mobile', alt: 'Mobile'},
-            {src: 'https://img.shields.io/badge/Zero-Deps-lightgreen?style=for-the-badge&logo=unlocked', alt: 'Zero Deps'},
-            {src: 'https://img.shields.io/badge/Responsive-100-purple?style=for-the-badge&logo=responsive', alt: 'Responsive'},
-            {src: 'https://img.shields.io/badge/GitHub-Pages-green?style=for-the-badge&logo=github', alt: 'GH Pages'},
-            {src: 'https://img.shields.io/badge/1000%2B-Lines-gold?style=for-the-badge&logo=code', alt: 'Code God'}
-        ];
-
-        function generateBadges() {
-            const scroll = document.getElementById('badges-scroll');
-            badgesData.forEach(badge => {
-                const img = document.createElement('img');
-                img.className = 'badge';
-                img.src = badge.src;
-                img.alt = badge.alt;
-                scroll.appendChild(img);
-            });
-            // Duplicate for seamless loop
-            badgesData.forEach(badge => {
-                const img = document.createElement('img');
-                img.className = 'badge';
-                img.src = badge.src;
-                img.alt = badge.alt;
-                scroll.appendChild(img);
-            });
-        }
-
-        // Call on load
-        window.addEventListener('load', () => {
-            typewriter();
-            generateBadges();
-        });
-
-        /* Static glassy backgrounds active. Cursor/scroll only. */
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.2 });
+        document.querySelectorAll('.container').forEach(c => observer.observe(c));
     </script>
 </body>
 </html>
